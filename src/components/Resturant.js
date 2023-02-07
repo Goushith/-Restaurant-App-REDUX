@@ -1,0 +1,56 @@
+import React, { useEffect } from 'react'
+import { useState } from 'react' // hook 
+import Restcard from './Restcard'
+import Row from 'react-bootstrap/Row';
+// import Col from 'react-bootstrap/Col';
+
+function Resturant() {
+    const [resturantlist,setresturantlist]=useState([]) // defined a state
+
+
+//create a function for api call
+
+const getResturent = async()=>{  
+    //async await
+    
+   await fetch('/restaurants.json') //async call , await for if there occured an delay 
+   .then((data)=> //to get response
+         data.json() // to get json data
+    .then((result)=>
+        setresturantlist(result.restaurants)
+        // console.log(result.restaurants)
+    )
+    // console.log(data); to get response
+   )   
+}
+
+
+// console.log(resturantlist);
+
+useEffect(()=>{  // hook like use effect : To view things what we done
+    getResturent()
+},[])
+
+
+
+
+  return (
+
+<Row className='ms-2 me-2'>
+  {
+
+    
+    
+resturantlist.map(item=>(
+<Restcard restaurants={item}/>
+  ))
+  }
+
+
+
+
+ </Row>
+  )
+}
+
+export default Resturant
